@@ -18,6 +18,6 @@
         "src/LayerOperation.js",
         "src/BlockElement.js",
         "src/GlobalPara.js",
-        "src/LayerUI.js",
+        "src/LayerUI.js"
     ]
 }

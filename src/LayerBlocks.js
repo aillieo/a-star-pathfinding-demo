@@ -33,11 +33,6 @@ var LayerBlocks = cc.Layer.extend({
         });
         self.addChild(bg, -1);
 
-        self._blockCreator = new BlockCreator();
-        self.addChild(self._blockCreator);
-
-        self._chainFinder = new ChainFinder();
-        self.addChild(self._chainFinder);
 
         self.initMatrix();
 
@@ -107,7 +102,7 @@ var LayerBlocks = cc.Layer.extend({
 
         var block = new BlockElement();
 
-        blk.setTypeIndex(0);
+        block.setTypeIndex(0);
 
         block.setRow(row);
         block.setCol(col);
