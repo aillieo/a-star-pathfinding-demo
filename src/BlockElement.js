@@ -7,6 +7,12 @@ var BlockElement = cc.Sprite.extend({
     _pos_col:0,
     _pos_row:0,
     _typeIndex:0,
+    _valueG:0,
+    _valueH:0,
+    _valueF:0,
+    _labelG:null,
+    _labelH:null,
+    _labelF:null,
     ctor:function () {
 
         this._super();
@@ -17,6 +23,27 @@ var BlockElement = cc.Sprite.extend({
         self.setColor(cc.color(98,98,98));
         var wid = GlobalPara.blockWidth;
         self.setTextureRect(cc.rect(0,0,wid,wid));
+        
+        self._valueG = 0;
+        self._valueH = 0;
+        self._valueF = 0;
+        
+        var size = self.getContentSize();
+        
+        self._labelG = new cc.LabelTTF(self._valueG.toString(), "Arial", 18);
+        self._labelG.x = size.width * 0.25;
+        self._labelG.y = size.height * 0.25;
+        self.addChild(self._labelG);
+        
+        self._labelH = new cc.LabelTTF(self._valueH.toString(), "Arial", 18);
+        self._labelH.x = size.width * 0.75;
+        self._labelH.y = size.height * 0.25;
+        self.addChild(self._labelH);
+        
+        self._labelF = new cc.LabelTTF(self._valueF.toString(), "Arial", 18);
+        self._labelF.x = size.width * 0.25;
+        self._labelF.y = size.height * 0.75;
+        self.addChild(self._labelF);
         
         return true;
     },
@@ -85,79 +112,9 @@ var BlockElement = cc.Sprite.extend({
     setCol : function (col) {
 
         this._pos_col = col;
-    },
-    
-    isToBeRemoved : function(){
-        return this._willBeRemoved;
-    },
-    
-    markToRemove : function(){
-       this._willBeRemoved = true;
-    },
-    
-    getShuffleTag : function () {
-
-        return cc.random0To1();
-
-    },
-
-    getSuperPower: function (){
-
-        return this._withSuperPower;
-
-    },
-
-    setSuperPower: function (superPower) {
-
-        var self = this;
-        self._withSuperPower = superPower;
-
-        if(!self._superPowerSprite) {
-            self._superPowerSprite = new cc.Sprite();
-        }
-
-        switch (superPower){
-
-            case 1:
-                self._superPowerSprite.setTexture(res.thunder);
-                break;
-            case 2:
-                self._superPowerSprite.setTexture(res.cross);
-                break;
-            case 3:
-                self._superPowerSprite.setTexture(res.dot);
-                self._typeIndex = 0;
-                if(self._indexLabel){
-                
-                    self._indexLabel.removeFromParent();
-                }
-                
-                self.setColor(cc.color(98,98,98));
-                break;
-
-        }
-
-
-        self.addChild(self._superPowerSprite,0);
-        self._superPowerSprite.setOpacity(127);
-        self._superPowerSprite.setPosition(self.getContentSize().width/2, self.getContentSize().height/2);
-
-
-        this._willBeRemoved = false;
-
-
-    },
-
-    onRemove : function(){
-
-        if(this._superPowerSprite){
-            var st =  cc.scaleTo(0.2,3);
-            this._superPowerSprite.runAction(st);
-        }
-
-
     }
 
+    
 
 
 });

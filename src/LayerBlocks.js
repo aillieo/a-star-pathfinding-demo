@@ -5,18 +5,10 @@
 
 
 var LayerBlocks = cc.Layer.extend({
-    _blockCreator:null,
-    _chainFinder:null,
     _basePoint:null,
     _blockSource:null,
     _blockTarget:null,
     _blocks:[],
-    _hasBlockAnimation:true,
-    _needSwapAgain:false,
-    _needFillWithNewBlocks:false,
-    _layerOperationEnabled:false,
-    _needCheckDeath:true,
-    upperDisplayBound:0,
     _offsetY:-120,
     ctor:function () {
 
@@ -161,39 +153,13 @@ var LayerBlocks = cc.Layer.extend({
         var dat = event.getUserData();
 
         var p = dat.pt;
+        
         var dir = dat.dir;
 
-        self._blockSource = self.getBlockContainingPoint(p);
-
-
-
-
-        var dtRow = 0;
-        var dtCol = 0;
-
-
-        if(dir == "up"){
-            dtRow = 1;
-        }
-        else if(dir == "down"){
-            dtRow = -1;
-        }
-        else if(dir == "left"){
-            dtCol = -1;
-        }
-        else if(dir == "right"){
-            dtCol = 1;
-        }
-
-
-        self._blockTarget = self.getNeighborBlock(self._blockSource,dtRow,dtCol);
+        //self._blockSource = self.getBlockContainingPoint(p);
+        //self._blockTarget = self.getNeighborBlock(self._blockSource,dtRow,dtCol);
 
         //cc.log(dir);
-
-        //self._blockSource.setScale(0.5);
-        //self._blockTarget.setScale(0.5);
-        self.swapBlockPos(self._blockTarget, self._blockSource);
-        self._needSwapAgain = true;
 
     },
 
