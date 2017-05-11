@@ -4,9 +4,7 @@
 
 
 var LayerOperation = cc.Layer.extend({
-    _isTouchEnabled:false,
-    _moveEnded:true,
-
+    _operation:0,
     ctor:function () {
 
         this._super();
@@ -17,36 +15,24 @@ var LayerOperation = cc.Layer.extend({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             target : self,
-            onTouchBegan: self.onTouchBegan,
-            onTouchMoved: self.onTouchMoved
+            onTouchBegan: self.onTouchBegan
         });
         cc.eventManager.addListener(touchListener,self);
 
 
 
-        var enableTouchListener = cc.EventListener.create({
+        var changeOperationListener = cc.EventListener.create({
             event: cc.EventListener.CUSTOM,
             target : self,
-            eventName: "ENABLE_TOUCH",
+            eventName: "OPERATION",
             callback: function (event) {
                 var self = event.getCurrentTarget();
-                self._isTouchEnabled = true;
+                var dat = event.getUserData();
+                self._operation = dat.operation;
+                cc.log("new opt " + self._operation.toString());
             }
         });
-        cc.eventManager.addListener(enableTouchListener,self);
-
-
-        var disableTouchListener = cc.EventListener.create({
-            event: cc.EventListener.CUSTOM,
-            target : self,
-            eventName: "DISABLE_TOUCH",
-            callback: function (event) {
-                var self = event.getCurrentTarget();
-                self._isTouchEnabled = false;
-            }
-        });
-        cc.eventManager.addListener(disableTouchListener,self);
-
+        cc.eventManager.addListener(changeOperationListener,self);
 
 
 
@@ -58,87 +44,19 @@ var LayerOperation = cc.Layer.extend({
 
 
         var self = event.getCurrentTarget();
-        if(!self._isTouchEnabled) {
-            return false;
-        }
-
-        //cc.log("touch began");
-
-        self._moveEnded = false;
-
-
-        event.getCurrentTarget().touchStartX = touch.getLocation().x;
-        event.getCurrentTarget().touchStartY = touch.getLocation().y;
-
-
-
-
-        return true;
-
-    },
-
-
-    onTouchMoved:function(touch, event){
-
-
-        var self = event.getCurrentTarget();
-        if(self._moveEnded){
-            return;
-        }
 
         var touchX = touch.getLocation().x;
         var touchY = touch.getLocation().y;
-        var touchStartX = event.getCurrentTarget().touchStartX;
-        var touchStartY = event.getCurrentTarget().touchStartY;
 
-        var deltaX = touchX - touchStartX;
-        var deltaY = touchY - touchStartY;
-
-
-
-        var tmpDir = "";
-        if(deltaX >10){
-
-            tmpDir = "right";
-
-        }
-        else if (deltaX < -10) {
-
-            tmpDir = "left";
-
-        }
-        else if (deltaY >10){
-
-            tmpDir = "up";
-        }
-        else if (deltaY < -10) {
-
-            tmpDir = "down";
-
-        }
-
-
-        if(tmpDir == ""){
-
-            return;
-
-        }
-
-
-        self._moveEnded = true;
-
-
-        //var eve = new cc.EventCustom("OPERATION");
         var dat = {
-            pt : cc.p(touchStartX,touchStartY),
-            dir : tmpDir
+            pt : cc.p(touchX,touchY),
+            opt : self._operation
         };
         //eve.setUserData(data);
 
-        cc.eventManager.dispatchCustomEvent("OPERATION",dat);
-
-
-        //cc.log("touch moved");
+        cc.eventManager.dispatchCustomEvent("TOUCH",dat);
+        
+        return true;
 
     }
 

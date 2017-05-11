@@ -6,10 +6,11 @@
 
 var LayerBlocks = cc.Layer.extend({
     _basePoint:null,
-    _blockSource:null,
-    _blockTarget:null,
+    _blockIn:null,
+    _blockOut:null,
     _blocks:[],
     _offsetY:-120,
+    _pathFinder:null,
     ctor:function () {
 
 
@@ -29,24 +30,21 @@ var LayerBlocks = cc.Layer.extend({
         self.initMatrix();
 
 
+        self._pathFinder = new PathFinder();
+        self.addChild(self._pathFinder);
+
+
+
         var operationListener = cc.EventListener.create({
             event: cc.EventListener.CUSTOM,
             target : self,
-            eventName: "OPERATION",
-            callback: self.handleOperation
+            eventName: "TOUCH",
+            callback: self.handleTouch
         });
         cc.eventManager.addListener(operationListener,self);
 
-
-
-
-        self.scheduleUpdate();
-
-
-
-
-
-
+        
+        //self.scheduleUpdate();
 
 
         return true;
@@ -72,7 +70,6 @@ var LayerBlocks = cc.Layer.extend({
         self._upperDisplayBound = py + matrixHeight + 0*itemWidth;
 
         self._blocks = new Array(GlobalPara.columns * GlobalPara.rows);
-        self._blocksToRemove = [];
 
         for(var r = 0; r<GlobalPara.rows; r++) {
 
@@ -87,7 +84,10 @@ var LayerBlocks = cc.Layer.extend({
 
                 block.setPosition(self.getPositionByDim(r,c));
 
-                self.addChild(block)
+                self.addChild(block);
+
+                self._blocks[r * GlobalPara.columns + c] = block;
+
 
             }
 
@@ -107,21 +107,6 @@ var LayerBlocks = cc.Layer.extend({
         return cc.p(x,y);
 
     },
-
-    update : function (delta) {
-
-        //cc.log(delta);
-
-        var self = this;
-        
-
-        //
-
-
-
-    },
-
-
 
 
     getBlockContainingPoint : function (p) {
@@ -145,7 +130,7 @@ var LayerBlocks = cc.Layer.extend({
 
     },
 
-    handleOperation:function(event){
+    handleTouch:function(event){
 
 
         var self = event.getCurrentTarget();
@@ -153,8 +138,16 @@ var LayerBlocks = cc.Layer.extend({
         var dat = event.getUserData();
 
         var p = dat.pt;
-        
-        var dir = dat.dir;
+
+        var blk = self.getBlockContainingPoint(p);
+        if(blk == null)
+        {
+            return;
+        }
+
+        blk.setTypeIndex(dat.opt);
+
+        cc.log(p.x.toString() + ", " + p.y.toString() + ", " + dat.opt.toString());
 
         //self._blockSource = self.getBlockContainingPoint(p);
         //self._blockTarget = self.getNeighborBlock(self._blockSource,dtRow,dtCol);

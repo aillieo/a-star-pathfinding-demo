@@ -23,6 +23,13 @@ var BlockElement = cc.Sprite.extend({
         self.setColor(cc.color(98,98,98));
         var wid = GlobalPara.blockWidth;
         self.setTextureRect(cc.rect(0,0,wid,wid));
+
+
+        self._indexLabel = new cc.LabelTTF("", "Arial", 38);
+        self._indexLabel.x = self.getContentSize().width/2;
+        self._indexLabel.y = self.getContentSize().height/2;
+        self.addChild(self._indexLabel, 5);
+
         
         self._valueG = 0;
         self._valueH = 0;
@@ -49,12 +56,7 @@ var BlockElement = cc.Sprite.extend({
     },
     
     setTypeIndex:function(typeIndex){
-      
-        if (this._typeIndexInitialized) {
-        
-            return;
-        }
-        this._typeIndexInitialized = true;
+
         this._typeIndex = typeIndex;
         var self = this;
 
@@ -74,13 +76,10 @@ var BlockElement = cc.Sprite.extend({
                 text = "OUT";
                 break;
         }
-        self._indexLabel = new cc.LabelTTF(text, "Arial", 38);
+        self._indexLabel.setString(text);
 
 
-        self._indexLabel.x = self.getContentSize().width/2;
-        self._indexLabel.y = self.getContentSize().height/2;
 
-        self.addChild(self._indexLabel, 5);
 
         // var rgbR = (GlobalPara.blockTypes - this._typeIndex) * 255/ GlobalPara.blockTypes;
         // var rgbB = this._typeIndex * 255/ GlobalPara.blockTypes;
