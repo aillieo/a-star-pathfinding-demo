@@ -86,7 +86,16 @@ var LayerBlocks = cc.Layer.extend({
 
             for(var c = 0; c<GlobalPara.columns; c++){
 
-                self.createAndDropBlock(r,c,matrixHeight);
+                var block = new BlockElement();
+
+                block.setTypeIndex(0);
+
+                block.setRow(r);
+                block.setCol(c);
+
+                block.setPosition(self.getPositionByDim(r,c));
+
+                self.addChild(block)
 
             }
 
@@ -96,20 +105,6 @@ var LayerBlocks = cc.Layer.extend({
 
     },
 
-    createAndDropBlock:function(row,col,dropHeight) {
-
-        var self = this;
-
-        var block = new BlockElement();
-
-        block.setTypeIndex(0);
-
-        block.setRow(row);
-        block.setCol(col);
-
-        block.setPosition(self.getPositionByDim(row,col));
-
-    },
 
     getPositionByDim:function(row,col) {
 

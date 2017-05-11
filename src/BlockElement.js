@@ -31,7 +31,23 @@ var BlockElement = cc.Sprite.extend({
         this._typeIndex = typeIndex;
         var self = this;
 
-        self._indexLabel = new cc.LabelTTF(self._typeIndex.toString(), "Arial", 38);
+        var text = "";
+        switch (typeIndex)
+        {
+            case 0:
+                text = "";
+                break;
+            case 1:
+                text = "x";
+                break;
+            case 2:
+                text = "IN";
+                break;
+            case 3:
+                text = "OUT";
+                break;
+        }
+        self._indexLabel = new cc.LabelTTF(text, "Arial", 38);
 
 
         self._indexLabel.x = self.getContentSize().width/2;
