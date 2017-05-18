@@ -6,8 +6,6 @@
 
 var LayerBlocks = cc.Layer.extend({
     _basePoint:null,
-    _blockIn:null,
-    _blockOut:null,
     _blocks:[],
     _offsetY:-120,
     _pathFinder:null,
@@ -145,9 +143,25 @@ var LayerBlocks = cc.Layer.extend({
             return;
         }
 
+        if(dat.opt == 2)
+        {
+            if(self._pathFinder.blockIN != null)
+            {
+                self._pathFinder.blockIN.setTypeIndex(0);
+            }
+            self._pathFinder.blockIN = blk;
+        }
+        else if(dat.opt == 3)
+        {
+            if(self._pathFinder.blockOUT != null)
+            {
+                self._pathFinder.blockOUT.setTypeIndex(0);
+            }
+            self._pathFinder.blockOUT = blk;
+        }
         blk.setTypeIndex(dat.opt);
 
-        cc.log(p.x.toString() + ", " + p.y.toString() + ", " + dat.opt.toString());
+        //cc.log(p.x.toString() + ", " + p.y.toString() + ", " + dat.opt.toString());
 
         //self._blockSource = self.getBlockContainingPoint(p);
         //self._blockTarget = self.getNeighborBlock(self._blockSource,dtRow,dtCol);

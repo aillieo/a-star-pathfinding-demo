@@ -111,9 +111,38 @@ var BlockElement = cc.Sprite.extend({
     setCol : function (col) {
 
         this._pos_col = col;
+    },
+
+    setG : function (G) {
+
+        this._valueG = G;
+        this._labelG.setString(self._valueG.toString());
+        self._valueF = self._valueG + self._valueH;
+        this._labelF.setString(self._valueF.toString());
+
+    },
+
+    setH : function (H) {
+
+        this._valueH = H;
+        this._labelH.setString(self._valueH.toString());
+        self._valueF = self._valueG + self._valueH;
+        this._labelF.setString(self._valueF.toString());
+    },
+
+    getG : function () {
+
+        return this._valueG;
+    },
+
+    getH : function () {
+
+        return this._valueH;
+    },
+
+    getF : function () {
+
+        return this._valueF;
     }
-
-    
-
 
 });
