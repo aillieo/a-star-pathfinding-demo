@@ -111,6 +111,7 @@ var LayerUI = cc.Layer.extend({
 
         var self = this;
         self._labelStatus.setString("Finding...");
+        cc.eventManager.dispatchCustomEvent("START_FIND");
     },
 
     

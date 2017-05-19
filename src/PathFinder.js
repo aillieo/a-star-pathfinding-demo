@@ -5,8 +5,8 @@
 
 
 var PathFinder = cc.Node.extend({
-    _openList:[],
-    _closedList:[],
+    openList:null,
+    closedList:null,
     blockIN:null,
     blockOUT:null,
     ctor:function () {
@@ -14,8 +14,8 @@ var PathFinder = cc.Node.extend({
 
         this._super();
 
-        this._openList = new Array(0);
-        this._closedList = new Array(0);
+        this.openList = new Array(0);
+        this.closedList = new Array(0);
 
 
         return true;

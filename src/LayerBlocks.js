@@ -42,6 +42,15 @@ var LayerBlocks = cc.Layer.extend({
         cc.eventManager.addListener(operationListener,self);
 
         
+        var startFindListener = cc.EventListener.create({
+            event: cc.EventListener.CUSTOM,
+            target : self,
+            eventName: "START_FIND",
+            callback: self.handleStartFind
+        });
+        cc.eventManager.addListener(startFindListener,self);
+
+        
         //self.scheduleUpdate();
 
 
@@ -170,6 +179,22 @@ var LayerBlocks = cc.Layer.extend({
 
     },
 
+    handleStartFind:function(event){
+        
+        var self = event.getCurrentTarget();
+        if(self._pathFinder.blockIN == null ||
+            self._pathFinder.blockOUT == null ||
+            self._pathFinder.blockIN == self._pathFinder.blockOUT)
+        {
+            cc.log("in/out error");
+            return;
+        }
+        cc.log("start find");
+        
+        
+    },
+    
+    
     getNeighborBlock :function(blockRef,deltaRow,deltaCol){
 
         var self = this;
@@ -182,6 +207,7 @@ var LayerBlocks = cc.Layer.extend({
             return self._blocks[r * GlobalPara.columns + c];
 
         }
+        return null;
 
 
     }
