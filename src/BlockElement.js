@@ -115,19 +115,21 @@ var BlockElement = cc.Sprite.extend({
 
     setG : function (G) {
 
-        this._valueG = G;
-        this._labelG.setString(self._valueG.toString());
+        var self = this;
+        self._valueG = G;
+        self._labelG.setString(self._valueG.toString());
         self._valueF = self._valueG + self._valueH;
-        this._labelF.setString(self._valueF.toString());
+        self._labelF.setString(self._valueF.toString());
 
     },
 
     setH : function (H) {
 
-        this._valueH = H;
-        this._labelH.setString(self._valueH.toString());
+        var self = this;
+        self._valueH = H;
+        self._labelH.setString(self._valueH.toString());
         self._valueF = self._valueG + self._valueH;
-        this._labelF.setString(self._valueF.toString());
+        self._labelF.setString(self._valueF.toString());
     },
 
     getG : function () {

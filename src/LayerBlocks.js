@@ -190,8 +190,20 @@ var LayerBlocks = cc.Layer.extend({
             return;
         }
         cc.log("start find");
-        
-        
+
+        self._pathFinder.closedList = new Array();
+        self._pathFinder.openList = new Array();
+
+        var _in = self._pathFinder.blockIN;
+        var _out = self._pathFinder.blockOUT;
+
+        // self.getNeighborBlock(_in,1,0).setG(1);
+        // self.getNeighborBlock(_in,-1,0).setG(1);
+        // self.getNeighborBlock(_in,0,1).setG(1);
+        // self.getNeighborBlock(_in,0,-1).setG(1);
+
+
+
     },
     
     
@@ -209,6 +221,16 @@ var LayerBlocks = cc.Layer.extend({
         }
         return null;
 
+
+    },
+
+    getEstimatedDistance: function(block1, block2){
+
+        if(block1 == null || block2 == null)
+        {
+            return NaN;
+        }
+        return Math.abs(block1.getCol() - block2.getCol()) + Math.abs(block1.getRow() - block2.getRow())
 
     }
 
