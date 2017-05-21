@@ -182,58 +182,14 @@ var LayerBlocks = cc.Layer.extend({
     handleStartFind:function(event){
         
         var self = event.getCurrentTarget();
-        if(self._pathFinder.blockIN == null ||
-            self._pathFinder.blockOUT == null ||
-            self._pathFinder.blockIN == self._pathFinder.blockOUT)
-        {
-            cc.log("in/out error");
-            return;
-        }
-        cc.log("start find");
 
-        self._pathFinder.closedList = new Array();
-        self._pathFinder.openList = new Array();
 
-        var _in = self._pathFinder.blockIN;
-        var _out = self._pathFinder.blockOUT;
-
-        // self.getNeighborBlock(_in,1,0).setG(1);
-        // self.getNeighborBlock(_in,-1,0).setG(1);
-        // self.getNeighborBlock(_in,0,1).setG(1);
-        // self.getNeighborBlock(_in,0,-1).setG(1);
+        self._pathFinder.findPath(self._blocks);
 
 
 
-    },
-    
-    
-    getNeighborBlock :function(blockRef,deltaRow,deltaCol){
-
-        var self = this;
-
-        var r = blockRef.getRow();
-        var c = blockRef.getCol();
-        r = r + deltaRow;
-        c = c + deltaCol;
-        if(c>= 0 && c< GlobalPara.columns && r>=0 && r < GlobalPara.rows){
-            return self._blocks[r * GlobalPara.columns + c];
-
-        }
-        return null;
-
-
-    },
-
-    getEstimatedDistance: function(block1, block2){
-
-        if(block1 == null || block2 == null)
-        {
-            return NaN;
-        }
-        return Math.abs(block1.getCol() - block2.getCol()) + Math.abs(block1.getRow() - block2.getRow())
 
     }
-
 
 
 
