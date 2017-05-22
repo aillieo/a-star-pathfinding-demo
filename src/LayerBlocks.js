@@ -6,7 +6,6 @@
 
 var LayerBlocks = cc.Layer.extend({
     _basePoint:null,
-    _blocks:[],
     _offsetY:-120,
     _pathFinder:null,
     ctor:function () {
@@ -25,11 +24,12 @@ var LayerBlocks = cc.Layer.extend({
         self.addChild(bg, -1);
 
 
-        self.initMatrix();
+        var allBlocks = self.initMatrix();
 
 
         self._pathFinder = new PathFinder();
         self.addChild(self._pathFinder);
+        self._pathFinder.setAllBlocks(allBlocks);
 
 
 
@@ -62,6 +62,7 @@ var LayerBlocks = cc.Layer.extend({
 
 
         var self = this;
+        var allBlocks = [];
 
         var size = cc.winSize;
         var itemWidth = GlobalPara.blockWidth;
@@ -76,7 +77,7 @@ var LayerBlocks = cc.Layer.extend({
         var matrixHeight = (itemWidth+GlobalPara.blockGap)*GlobalPara.rows;
         self._upperDisplayBound = py + matrixHeight + 0*itemWidth;
 
-        self._blocks = new Array(GlobalPara.columns * GlobalPara.rows);
+        allBlocks = new Array(GlobalPara.columns * GlobalPara.rows);
 
         for(var r = 0; r<GlobalPara.rows; r++) {
 
@@ -93,12 +94,14 @@ var LayerBlocks = cc.Layer.extend({
 
                 self.addChild(block);
 
-                self._blocks[r * GlobalPara.columns + c] = block;
+                allBlocks[r * GlobalPara.columns + c] = block;
 
 
             }
 
         }
+        
+        return allBlocks;
 
 
 
@@ -121,13 +124,14 @@ var LayerBlocks = cc.Layer.extend({
 
 
         var self = this;
-
-        var length = self._blocks.length;
+        var allBlocks = self._pathFinder.getAllBlocks();
+        
+        var length = allBlocks.length;
         for (var i =0 ; i<length ;i++){
-            if(cc.rectContainsPoint(this._blocks[i].getBoundingBox(),p)){
+            if(cc.rectContainsPoint(allBlocks[i].getBoundingBox(),p)){
 
 
-                return this._blocks[i];
+                return allBlocks[i];
             }
         }
 
@@ -170,13 +174,6 @@ var LayerBlocks = cc.Layer.extend({
         }
         blk.setTypeIndex(dat.opt);
 
-        //cc.log(p.x.toString() + ", " + p.y.toString() + ", " + dat.opt.toString());
-
-        //self._blockSource = self.getBlockContainingPoint(p);
-        //self._blockTarget = self.getNeighborBlock(self._blockSource,dtRow,dtCol);
-
-        //cc.log(dir);
-
     },
 
     handleStartFind:function(event){
@@ -184,7 +181,7 @@ var LayerBlocks = cc.Layer.extend({
         var self = event.getCurrentTarget();
 
 
-        self._pathFinder.findPath(self._blocks);
+        self._pathFinder.findPath();
 
 
 

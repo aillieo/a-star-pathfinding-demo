@@ -61,8 +61,18 @@ var PathFinder = cc.Node.extend({
 
     },
 
+    setAllBlocks: function(blocks)
+    {
+        var self = this;
+        self._allBlocks = blocks;
+    },
+    
+    getAllBlocks: function()
+    {
+        return this._allBlocks;
+    },
 
-    findPath:function(allBlocks)
+    findPath:function()
     {
 
         var self = this;
@@ -76,9 +86,8 @@ var PathFinder = cc.Node.extend({
 
         cc.log("start find");
 
-        self._allBlocks = allBlocks;
-
-
+        // self.scheduleUpdate();
+        self.schedule(self.update,1.0);
 
         var _open = self.openList;
         var _closed = self.closedList;
@@ -93,7 +102,7 @@ var PathFinder = cc.Node.extend({
         do
         {
 
-            break;
+            // break;
 
             // 1. update G H F
 
@@ -113,6 +122,7 @@ var PathFinder = cc.Node.extend({
 
             // 5. find and insert to OPEN
 
+            break;
 
         }
         while(!arrayContainsBlock(_closed,_out) && _open.length>0);
@@ -120,6 +130,11 @@ var PathFinder = cc.Node.extend({
 
         return true;
 
+    },
+    
+    update:function(delta)
+    {
+        cc.log("finding");
     }
 
 });
