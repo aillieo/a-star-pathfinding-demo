@@ -86,6 +86,11 @@ var BlockElement = cc.Sprite.extend({
         // var rgbG = 255- Math.abs(rgbR - rgbB);
         // self.setColor(cc.color(rgbR, rgbG, rgbB));
     },
+    
+    getTypeIndex : function()
+    {
+        return this._typeIndex;
+    },
 
     getCol : function () {
 
@@ -145,6 +150,11 @@ var BlockElement = cc.Sprite.extend({
     getF : function () {
 
         return this._valueF;
+    },
+    
+    setClosed : function()
+    {
+        this.setColor(cc.color(255, 0, 0));
     }
 
 });
