@@ -14,6 +14,7 @@ var LayerUI = cc.Layer.extend({
     _btnBlock:null,
     _btnEmpty:null,
     _btnFind:null,
+    _btnReset:null,
     ctor:function () {
 
         this._super();
@@ -57,12 +58,16 @@ var LayerUI = cc.Layer.extend({
         self._btnFind.x = size.width/2 + 100;
         self._btnFind.y = size.height * 0.8;
 
+        var labelReset = new cc.LabelTTF("RESET", "Arial", 38);
+        self._btnReset = new cc.MenuItemLabel(labelReset,self.reset,self);
+        self._btnReset.x = size.width/2 + 100;
+        self._btnReset.y = size.height * 0.8;
 
-        var menu = new cc.Menu(self._btnIn,self._btnOut,self._btnBlock,self._btnEmpty,self._btnFind);
+        var menu = new cc.Menu(self._btnIn,self._btnOut,self._btnBlock,self._btnEmpty,self._btnFind,self._btnReset);
         menu.alignItemsVertically();
         this.addChild(menu);
         menu.x = size.width/2 + 200;
-        menu.y = size.height * 0.8;
+        menu.y = size.height * 0.8 + 60;
 
 
         var statusListener = cc.EventListener.create({
@@ -112,6 +117,12 @@ var LayerUI = cc.Layer.extend({
         var self = this;
         self._labelStatus.setString("Finding...");
         cc.eventManager.dispatchCustomEvent("START_FIND");
+    },
+    
+    reset : function(){
+
+        var self = this;
+        cc.eventManager.dispatchCustomEvent("RESET");
     },
 
     

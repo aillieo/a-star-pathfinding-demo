@@ -20,7 +20,7 @@ var BlockElement = cc.Sprite.extend({
         var self = this;
         self.setCascadeOpacityEnabled(true);
         self.setTexture(res.blank);
-        self.setColor(cc.color(98,98,98));
+        // self.setColor(cc.color(98,98,98));
         var wid = GlobalPara.blockWidth;
         self.setTextureRect(cc.rect(0,0,wid,wid));
 
@@ -31,9 +31,9 @@ var BlockElement = cc.Sprite.extend({
         self.addChild(self._indexLabel, 5);
 
         
-        self._valueG = 0;
-        self._valueH = 0;
-        self._valueF = 0;
+        // self._valueG = 0;
+        // self._valueH = 0;
+        // self._valueF = 0;
         
         var size = self.getContentSize();
         
@@ -51,6 +51,8 @@ var BlockElement = cc.Sprite.extend({
         self._labelF.x = size.width * 0.25;
         self._labelF.y = size.height * 0.75;
         self.addChild(self._labelF);
+        
+        self.reset();
         
         return true;
     },
@@ -85,6 +87,14 @@ var BlockElement = cc.Sprite.extend({
         // var rgbB = this._typeIndex * 255/ GlobalPara.blockTypes;
         // var rgbG = 255- Math.abs(rgbR - rgbB);
         // self.setColor(cc.color(rgbR, rgbG, rgbB));
+    },
+    
+    reset: function()
+    {
+        var self = this;
+        self.setColor(cc.color(98,98,98));
+        self.setG(0);
+        self.setH(0);
     },
     
     getTypeIndex : function()
@@ -156,5 +166,7 @@ var BlockElement = cc.Sprite.extend({
     {
         this.setColor(cc.color(255, 0, 0));
     }
+    
+    
 
 });

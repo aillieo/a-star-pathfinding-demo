@@ -121,6 +121,22 @@ var PathFinder = cc.Node.extend({
         return true;
     },
     
+    
+    clearPath:function()
+    {
+        
+        var self = this;
+        
+        self.unscheduleAllCallbacks();
+        
+        for(var i = 0 ; i < self._allBlocks.length; i++ )
+        {
+            self._allBlocks[i].reset();
+        }
+
+    },
+    
+    
     update:function(delta)
     {
         cc.log("finding...");

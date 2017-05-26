@@ -51,6 +51,15 @@ var LayerBlocks = cc.Layer.extend({
         cc.eventManager.addListener(startFindListener,self);
 
         
+        var resetListener = cc.EventListener.create({
+            event: cc.EventListener.CUSTOM,
+            target : self,
+            eventName: "RESET",
+            callback: self.handleReset
+        });
+        cc.eventManager.addListener(resetListener,self);
+
+        
         //self.scheduleUpdate();
 
 
@@ -186,6 +195,12 @@ var LayerBlocks = cc.Layer.extend({
 
 
 
+    },
+    
+    handleReset:function(event)
+    {
+        var self = event.getCurrentTarget();
+        self._pathFinder.clearPath();
     }
 
 
